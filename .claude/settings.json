@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/ÄGARE/Desktop/bni-referencer/src/app/**)",
+      "Read(//c/Users/ÄGARE/Desktop/bni-referencer/src/components/**)",
+      "Read(//c/Users/Hai Pham Bui/Desktop/bni-referencer/src/app/**)",
+      "Read(//c/Users/ÄGARE/Desktop/bni-referencer/docs/**)",
+      "Read(//c/Users/ÄGARE/Desktop/bni-referencer/**)",
+      "Read(//c/Users/Hai Pham Bui/.claude/**)",
+      "Read(//c/Users/ÄGARE/.claude/**)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\ÄGARE\\Desktop\\bni-referenser",
+      "C:\\Users\\ÄGARE\\.claude\\projects\\c--Users-Hai-Pham-Bui-Desktop-bni-referenser",
+      "C:\\Users\\Hai Pham Bui\\.claude\\plugins"
+    ]
+  }
+}

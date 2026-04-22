@@ -1,0 +1,38 @@
+export interface Member {
+  id: string;
+  name: string;
+  companyName: string;
+  active: boolean;
+}
+
+export interface SearchEntry {
+  id: string;
+  weekKey: string; // e.g. "2026-W15"
+  weekLabel: string; // e.g. "2026 - Vecka 15"
+  year: number;
+  weekNumber: number;
+  memberId: string;
+  searchText: string;
+  contactPerson?: string;
+  geography?: string;
+  industry?: string;
+  note?: string;
+  createdBy?: string;
+  createdAt: string; // ISO date string
+  updatedAt: string;
+}
+
+export interface WeekSummary {
+  weekKey: string;
+  weekLabel: string;
+  year: number;
+  weekNumber: number;
+  totalSearches: number;
+  activeMembers: number;
+}
+
+export interface Signal {
+  id: string;
+  text: string;
+  type: "geography" | "industry" | "member" | "general";
+}

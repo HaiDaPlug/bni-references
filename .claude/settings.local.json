@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-turbopack)",
+      "Bash(cmd.exe /c \"dir C:\\\\\\\\Users\\\\\\\\ÄGARE\\\\\\\\Desktop\\\\\\\\bni-temp\")",
+      "Bash(powershell.exe -Command ':*)",
+      "Read(//c/Users/Hai Pham Bui/Desktop/**)",
+      "Bash(npm install *)"
+    ]
+  }
+}
