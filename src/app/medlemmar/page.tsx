@@ -10,6 +10,7 @@ import { useApp } from "@/lib/context";
 import { Member, SearchEntry } from "@/lib/types";
 import { Plus, Search } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { memberColor } from "@/lib/member-color";
 
 export default function MedlemmarPage() {
   const { members, entries } = useApp();
@@ -60,9 +61,17 @@ export default function MedlemmarPage() {
           initial="hidden"
           animate="show"
         >
-          {members.filter(m => m.active).map((member) => {
+          {members.filter(m => m.active).sort((a, b) => {
+            const lastA = a.name.split(" ")[1] ?? a.name;
+            const lastB = b.name.split(" ")[1] ?? b.name;
+            const startsWithÅ = (s: string) => s.toUpperCase().startsWith("Å");
+            if (startsWithÅ(lastA) && !startsWithÅ(lastB)) return -1;
+            if (!startsWithÅ(lastA) && startsWithÅ(lastB)) return 1;
+            return lastA.localeCompare(lastB, "sv");
+          }).map((member) => {
             const stats = memberStats.get(member.id);
             const initials = member.name.split(" ").map(n => n[0]).join("").slice(0, 2);
+            const color = memberColor(member.name);
 
             return (
               <motion.div
@@ -77,7 +86,7 @@ export default function MedlemmarPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-xs font-bold text-primary shrink-0">
+                      <div className={`flex h-9 w-9 items-center justify-center rounded-full ${color.bg} text-xs font-bold ${color.text} shrink-0`}>
                         {initials}
                       </div>
                       <div className="min-w-0">

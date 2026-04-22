@@ -91,7 +91,7 @@ export function Sidebar() {
       <div className="border-t border-sidebar-border px-6 py-3.5">
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-          <p className="text-[10px] text-muted-foreground">v1.0 · localStorage</p>
+          <p className="text-[10px] text-muted-foreground">v1.0 · Live</p>
         </div>
       </div>
     </aside>

@@ -139,6 +139,16 @@ function WeekPicker({ value, onChange }: WeekPickerProps) {
 
 export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWeekKey }: AddSearchModalProps) {
   const { members, addEntry } = useApp();
+
+  const sortedActiveMembers = members.filter(m => m.active).sort((a, b) => {
+    const lastA = a.name.split(" ")[1] ?? a.name;
+    const lastB = b.name.split(" ")[1] ?? b.name;
+    const startsWithÅ = (s: string) => s.toUpperCase().startsWith("Å");
+    if (startsWithÅ(lastA) && !startsWithÅ(lastB)) return -1;
+    if (!startsWithÅ(lastA) && startsWithÅ(lastB)) return 1;
+    return lastA.localeCompare(lastB, "sv");
+  });
+
   const [memberId, setMemberId] = useState(defaultMemberId || "");
   const [weekKey, setWeekKey] = useState(defaultWeekKey || getCurrentWeekKey());
   const [searchText, setSearchText] = useState("");
@@ -179,6 +189,11 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
       setGeography("");
       setIndustry("");
       setNote("");
+      if (!defaultMemberId) {
+        const idx = sortedActiveMembers.findIndex(m => m.id === memberId);
+        const next = sortedActiveMembers[idx + 1];
+        if (next) setMemberId(next.id);
+      }
     } else {
       resetForm();
       onOpenChange(false);
@@ -203,7 +218,7 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
                 className="flex h-9 w-full rounded-md border border-input bg-card px-3 py-1 text-sm text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
                 <option value="" className="bg-popover text-foreground">Välj medlem...</option>
-                {members.filter(m => m.active).map((m) => (
+                {sortedActiveMembers.map((m) => (
                   <option key={m.id} value={m.id} className="bg-popover text-foreground">{m.name}</option>
                 ))}
               </select>

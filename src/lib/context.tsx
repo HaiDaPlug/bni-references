@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
 import { Member, SearchEntry } from "./types";
 import * as store from "./store";
+import { createClient } from "@/utils/supabase/client";
 import { getCurrentWeekKey } from "./week-utils";
 
 interface AppState {
@@ -33,6 +34,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     refresh().finally(() => setLoading(false));
+
+    const supabase = createClient();
+    const channel = supabase
+      .channel("search_entries_realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "search_entries" }, () => {
+        refresh();
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
   }, [refresh]);
 
   const addEntry = useCallback(

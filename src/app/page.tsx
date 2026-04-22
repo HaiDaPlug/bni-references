@@ -13,9 +13,14 @@ import { generateWeeklyExportText } from "@/lib/export";
 import { SearchEntry } from "@/lib/types";
 import { Plus, Copy, ArrowUpRight, Zap } from "lucide-react";
 import { motion } from "framer-motion";
+import { memberColor } from "@/lib/member-color";
+
+function Skeleton({ className }: { className?: string }) {
+  return <div className={`animate-pulse rounded-md bg-muted ${className ?? ""}`} />;
+}
 
 export default function DashboardPage() {
-  const { entries, members } = useApp();
+  const { entries, members, loading } = useApp();
   const [addOpen, setAddOpen] = useState(false);
   const [overviewOpen, setOverviewOpen] = useState(false);
   const [editEntry, setEditEntry] = useState<SearchEntry | null>(null);
@@ -54,6 +59,37 @@ export default function DashboardPage() {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <div className="border-b border-border px-8 pt-10 pb-8">
+          <Skeleton className="h-3 w-12 mb-3" />
+          <Skeleton className="h-12 w-40 mb-3" />
+          <Skeleton className="h-4 w-56" />
+        </div>
+        <div className="flex flex-1 divide-x divide-border">
+          <div className="flex-1 px-8 py-7 space-y-6">
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-1 w-full" />
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-9 w-full" />
+                <Skeleton className="h-9 w-4/5" />
+              </div>
+            ))}
+          </div>
+          <div className="w-72 shrink-0 px-6 py-7 space-y-4">
+            <Skeleton className="h-3 w-20" />
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-12 w-full" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -102,9 +138,9 @@ export default function DashboardPage() {
                 <span className="text-foreground font-semibold">{activeMembers}</span> / {totalActive}
               </span>
             </div>
-            <div className="h-1 rounded-full bg-muted overflow-hidden">
+            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
               <motion.div
-                className="h-full rounded-full bg-primary"
+                className="h-full rounded-full bg-gradient-to-r from-primary via-rose-400 to-amber-400"
                 initial={{ width: 0 }}
                 animate={{ width: participationPct + "%" }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
@@ -122,6 +158,7 @@ export default function DashboardPage() {
           {/* This week's entries grouped by member */}
           {weekEntries.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
+              <p className="text-4xl mb-4">🔍</p>
               <p className="text-2xl font-bold mb-2">Ingen data ännu</p>
               <p className="text-sm text-muted-foreground mb-6">Starta veckan genom att lägga till den första sökningen.</p>
               <Button onClick={() => setAddOpen(true)} size="sm" className="gap-1.5">
@@ -139,10 +176,11 @@ export default function DashboardPage() {
               {byMember.map(([memberId, memberEntries]) => {
                 const member = members.find(m => m.id === memberId);
                 const initials = member?.name.split(" ").map(n => n[0]).join("").slice(0, 2) || "?";
+                const color = memberColor(member?.name ?? memberId);
                 return (
                   <div key={memberId}>
                     <div className="flex items-center gap-2.5 mb-2">
-                      <div className="h-6 w-6 rounded-full bg-primary/15 flex items-center justify-center text-[10px] font-bold text-primary shrink-0">
+                      <div className={`h-6 w-6 rounded-full ${color.bg} flex items-center justify-center text-[10px] font-bold ${color.text} shrink-0`}>
                         {initials}
                       </div>
                       <span className="text-xs font-semibold">{member?.name}</span>
@@ -158,8 +196,8 @@ export default function DashboardPage() {
                         >
                           <span className="text-sm">{entry.searchText}</span>
                           <div className="flex items-center gap-1.5 shrink-0 ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            {entry.geography && <Badge variant="secondary" className="text-[10px] h-5">{entry.geography}</Badge>}
-                            {entry.industry && <Badge variant="outline" className="text-[10px] h-5">{entry.industry}</Badge>}
+                            {entry.geography && <Badge variant="secondary" className="text-[10px] h-5">📍 {entry.geography}</Badge>}
+                            {entry.industry && <Badge variant="outline" className="text-[10px] h-5">🏷️ {entry.industry}</Badge>}
                           </div>
                         </div>
                       ))}
@@ -200,14 +238,17 @@ export default function DashboardPage() {
                 <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Saknas denna vecka</span>
               </div>
               <div className="space-y-2">
-                {inactiveMembers.slice(0, 8).map((member) => (
-                  <div key={member.id} className="flex items-center gap-2">
-                    <div className="h-5 w-5 rounded-full bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground shrink-0">
-                      {member.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+                {inactiveMembers.slice(0, 8).map((member) => {
+                  const color = memberColor(member.name);
+                  return (
+                    <div key={member.id} className="flex items-center gap-2">
+                      <div className={`h-5 w-5 rounded-full ${color.bg} flex items-center justify-center text-[9px] font-bold ${color.text} shrink-0`}>
+                        {member.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+                      </div>
+                      <span className="text-xs text-muted-foreground truncate">{member.name}</span>
                     </div>
-                    <span className="text-xs text-muted-foreground truncate">{member.name}</span>
-                  </div>
-                ))}
+                  );
+                })}
                 {inactiveMembers.length > 8 && (
                   <p className="text-[11px] text-muted-foreground pl-7">+{inactiveMembers.length - 8} till</p>
                 )}

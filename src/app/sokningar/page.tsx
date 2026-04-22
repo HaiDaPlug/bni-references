@@ -15,6 +15,7 @@ import { generateWeeklyExportText } from "@/lib/export";
 import { SearchEntry } from "@/lib/types";
 import { Copy, Search, CalendarDays, Users } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { memberColor } from "@/lib/member-color";
 
 export default function SokningarPage() {
   const { entries, members } = useApp();
@@ -217,13 +218,19 @@ export default function SokningarPage() {
             {byMember.map(([memberId, memberEntries]) => {
               const member = members.find((m) => m.id === memberId);
               const weekCount = new Set(memberEntries.map((e) => e.weekKey)).size;
+              const color = memberColor(member?.name ?? memberId);
               return (
-                <div key={memberId} className="rounded-lg border border-border bg-card">
-                  <div className="px-5 py-3.5 border-b border-border">
-                    <p className="text-sm font-semibold">{member?.name || "Okänd"}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {member?.companyName} &middot; {memberEntries.length} sökningar &middot; {weekCount} veckor
-                    </p>
+                <div key={memberId} className="rounded-lg border border-border bg-card overflow-hidden">
+                  <div className={`px-5 py-3.5 border-b border-border flex items-center gap-3`}>
+                    <div className={`h-8 w-8 rounded-full ${color.bg} flex items-center justify-center text-xs font-bold ${color.text} shrink-0`}>
+                      {member?.name.split(" ").map(n => n[0]).join("").slice(0, 2) ?? "?"}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold">{member?.name || "Okänd"}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {member?.companyName} &middot; {memberEntries.length} sökningar &middot; {weekCount} veckor
+                      </p>
+                    </div>
                   </div>
                   <div className="p-4">
                     <div className="space-y-2">
@@ -241,10 +248,10 @@ export default function SokningarPage() {
                             </div>
                             <div className="flex gap-1.5 flex-shrink-0 ml-4">
                               {entry.geography && (
-                                <Badge variant="secondary" className="text-[11px]">{entry.geography}</Badge>
+                                <Badge variant="secondary" className="text-[11px]">📍 {entry.geography}</Badge>
                               )}
                               {entry.industry && (
-                                <Badge variant="outline" className="text-[11px]">{entry.industry}</Badge>
+                                <Badge variant="outline" className="text-[11px]">🏷️ {entry.industry}</Badge>
                               )}
                             </div>
                           </div>
