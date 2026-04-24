@@ -108,7 +108,7 @@ export default function SokningarPage() {
         onAdd={() => setAddOpen(true)}
       />
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-6">
         {/* Filters */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="relative flex-1 min-w-48 max-w-sm">
@@ -156,7 +156,7 @@ export default function SokningarPage() {
               </p>
             )}
             <motion.div
-              className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
+              className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
               variants={cardVariants}
               initial="hidden"
               animate="show"

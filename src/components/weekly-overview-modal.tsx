@@ -39,7 +39,7 @@ export function WeeklyOverviewModal({ open, onOpenChange, weekKey, onEditEntry }
 
   return (
     <Dialog open={open} onOpenChange={(o) => { onOpenChange(o); setConfirmId(null); }}>
-      <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-full h-full rounded-none sm:rounded-lg sm:max-w-2xl sm:h-auto sm:max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{weekKeyToLabel(weekKey)}</DialogTitle>
           <p className="text-sm text-muted-foreground">

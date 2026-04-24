@@ -16,7 +16,7 @@ export function Topbar({ title, subtitle, onAdd, addLabel = "Lägg till sökning
   const prefersReduced = useReducedMotion();
 
   return (
-    <header className="flex h-14 items-center justify-between border-b border-border bg-card/50 px-6 backdrop-blur-sm sticky top-0 z-20">
+    <header className="flex h-14 items-center justify-between border-b border-border bg-card/50 px-4 md:px-6 backdrop-blur-sm sticky top-0 z-20">
       <div className="flex items-baseline gap-3">
         <h1 className="text-base font-semibold tracking-tight">{title}</h1>
         {subtitle && (

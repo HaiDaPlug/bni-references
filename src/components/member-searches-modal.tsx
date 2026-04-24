@@ -33,7 +33,7 @@ export function MemberSearchesModal({ open, onOpenChange, member, onEditEntry }:
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-full h-full rounded-none sm:rounded-lg sm:max-w-xl sm:h-auto sm:max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-sm font-bold text-primary shrink-0">

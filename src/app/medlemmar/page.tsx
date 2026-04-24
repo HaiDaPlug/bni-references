@@ -50,13 +50,13 @@ export default function MedlemmarPage() {
     <div className="flex flex-col">
       <Topbar
         title="Medlemmar"
-        subtitle={`${members.filter(m => m.active).length} aktiva`}
+        subtitle={`${members.filter(m => m.active).length} partners`}
         onAdd={() => { setAddForMember(undefined); setAddOpen(true); }}
       />
 
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         <motion.div
-          className="grid grid-cols-2 gap-4 lg:grid-cols-3"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-3"
           variants={gridVariants}
           initial="hidden"
           animate="show"

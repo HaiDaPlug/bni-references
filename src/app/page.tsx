@@ -95,10 +95,10 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero header — week identity */}
-      <div className="border-b border-border px-8 pt-10 pb-8 flex items-end justify-between">
+      <div className="border-b border-border px-5 md:px-8 pt-7 md:pt-10 pb-6 md:pb-8 flex items-end justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-2">{year}</p>
-          <h1 className="text-5xl font-bold tracking-tight leading-none">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-none">
             Vecka <span className="text-primary">{parseInt(weekNum)}</span>
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
@@ -108,7 +108,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-2 pb-1">
-          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5" onClick={handleCopyExport}>
+          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5 hidden sm:flex" onClick={handleCopyExport}>
             <Copy className="h-3.5 w-3.5" />
             {copied ? "Kopierat!" : "Exportera vecka"}
           </Button>
@@ -120,15 +120,16 @@ export default function DashboardPage() {
           >
             <Button size="sm" className="h-8 text-xs gap-1.5" onClick={() => setAddOpen(true)}>
               <Plus className="h-3.5 w-3.5" />
-              Lägg till sökning
+              <span className="hidden sm:inline">Lägg till sökning</span>
+              <span className="sm:hidden">Lägg till</span>
             </Button>
           </motion.div>
         </div>
       </div>
 
-      <div className="flex flex-1 divide-x divide-border">
+      <div className="flex flex-col md:flex-row flex-1 md:divide-x divide-border">
         {/* Left — main feed */}
-        <div className="flex-1 px-8 py-7 space-y-8">
+        <div className="flex-1 px-5 md:px-8 py-6 md:py-7 space-y-8">
 
           {/* Participation bar */}
           <div>
@@ -210,7 +211,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Right — signals + missing members */}
-        <div className="w-72 shrink-0 px-6 py-7 space-y-8">
+        <div className="md:w-72 shrink-0 px-5 md:px-6 py-6 md:py-7 space-y-8 border-t md:border-t-0 border-border">
 
           {/* Signals */}
           <div>

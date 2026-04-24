@@ -31,7 +31,7 @@ export function Sidebar() {
       };
 
   return (
-    <aside className="fixed left-0 top-0 z-30 flex h-full w-64 flex-col bg-sidebar border-r border-sidebar-border">
+    <aside className="hidden md:flex fixed left-0 top-0 z-30 h-full w-64 flex-col bg-sidebar border-r border-sidebar-border">
       {/* Logo */}
       <div className="flex h-16 items-center gap-3.5 px-6 border-b border-sidebar-border">
         <motion.div

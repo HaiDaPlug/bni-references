@@ -208,7 +208,7 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
         </DialogHeader>
 
         <div className="space-y-4 py-2">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="member">Medlem *</Label>
               <select
@@ -234,7 +234,7 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
             <Input id="search" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="contact">Person / kontakt</Label>
               <Input id="contact" value={contactPerson} onChange={(e) => setContactPerson(e.target.value)} />
@@ -245,7 +245,7 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="industry">Bransch</Label>
               <Input id="industry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
