@@ -202,12 +202,12 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-lg flex flex-col overflow-hidden">
+        <DialogHeader className="shrink-0">
           <DialogTitle>Lägg till sökning</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4 py-2">
+        <div className="flex-1 overflow-y-auto space-y-4 py-2 pr-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="member">Medlem *</Label>
@@ -262,7 +262,7 @@ export function AddSearchModal({ open, onOpenChange, defaultMemberId, defaultWee
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 pt-2">
+        <div className="flex justify-end gap-2 pt-2 shrink-0 border-t border-border mt-2">
           <Button variant="outline" onClick={() => { resetForm(); onOpenChange(false); }}>
             Avbryt
           </Button>
